@@ -9,8 +9,41 @@ permissions:
   contents: read
 
 jobs:
+  changes:
+    name: Detect change scope
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.scope.outputs.code }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Detect code changes
+        id: scope
+        shell: bash
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          if [ -z "$base" ]; then
+            base="${{ github.event.before }}"
+          fi
+          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ]; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! changed="$(git diff --name-only "$base" "${{ github.sha }}")"; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          printf '%s\n' "$changed"
+          if printf '%s\n' "$changed" | grep -Eq '(^|/)(pom\.xml|mvnw|mvnw\.cmd)$|^\.mvn/|^\.github/workflows/|^config/|^\.githooks/|\.java$|(^|/)src/|(^|/)application[^/]*\.(ya?ml)$|(^|/)logback[^/]*\.xml$'; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          fi
+
   verify:
     name: Build and quality gates
+    needs: changes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,9 +55,13 @@ jobs:
       - name: Make wrapper executable
         run: chmod +x mvnw
       - name: Verify
+        if: needs.changes.outputs.code == 'true'
         run: ./mvnw -B -ntp verify
+      - name: Skip docs-only change
+        if: needs.changes.outputs.code != 'true'
+        run: echo "Docs-only change detected; skipping Maven build and quality gates."
       - name: Upload reports
-        if: always()
+        if: always() && needs.changes.outputs.code == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: quality-reports
@@ -38,6 +75,7 @@ jobs:
 
   p3c:
     name: Alibaba P3C gate
+    needs: changes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,15 +87,20 @@ jobs:
       - name: Make wrapper executable
         run: chmod +x mvnw
       - name: P3C gate
+        if: needs.changes.outputs.code == 'true'
         run: ./mvnw -B -ntp -Pp3c verify -DskipTests
       - name: Ensure P3C analysis produced no errors
+        if: needs.changes.outputs.code == 'true'
         run: |
           if grep -R --include='pmd.xml' '<error ' .; then
             echo "P3C analysis errors found; see the pmd.xml reports above." >&2
             exit 1
           fi
+      - name: Skip docs-only change
+        if: needs.changes.outputs.code != 'true'
+        run: echo "Docs-only change detected; skipping P3C."
       - name: Upload P3C reports
-        if: always()
+        if: always() && needs.changes.outputs.code == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: p3c-reports
@@ -92,6 +135,7 @@ jobs:
 
   security:
     name: OWASP Dependency-Check
+    needs: changes
     runs-on: ubuntu-latest
     env:
       NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
@@ -104,12 +148,28 @@ jobs:
           cache: maven
       - name: Make wrapper executable
         run: chmod +x mvnw
+      - name: Get NVD cache week
+        id: nvd-week
+        if: needs.changes.outputs.code == 'true' && env.NVD_API_KEY != ''
+        run: echo "week=$(date -u +%Y-%V)" >> "$GITHUB_OUTPUT"
+      - name: Cache Dependency-Check NVD data
+        if: needs.changes.outputs.code == 'true' && env.NVD_API_KEY != ''
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository/org/owasp/dependency-check-data
+          key: dependency-check-data-${{ runner.os }}-${{ steps.nvd-week.outputs.week }}
+          restore-keys: |
+            dependency-check-data-${{ runner.os }}-
       - name: Dependency-Check
-        if: env.NVD_API_KEY != ''
+        if: needs.changes.outputs.code == 'true' && env.NVD_API_KEY != ''
         run: ./mvnw -B -ntp -Psecurity verify -DskipTests
+      - name: Skip docs-only change
+        if: needs.changes.outputs.code != 'true'
+        run: echo "Docs-only change detected; skipping Dependency-Check."
 
   sbom:
     name: SBOM
+    needs: changes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -121,8 +181,13 @@ jobs:
       - name: Make wrapper executable
         run: chmod +x mvnw
       - name: Generate SBOM
+        if: needs.changes.outputs.code == 'true'
         run: ./mvnw -B -ntp -Psecurity -Ddependency-check.skip=true verify -DskipTests
+      - name: Skip docs-only change
+        if: needs.changes.outputs.code != 'true'
+        run: echo "Docs-only change detected; skipping SBOM generation."
       - uses: actions/upload-artifact@v4
+        if: always() && needs.changes.outputs.code == 'true'
         with:
           name: sbom
           path: target/classes/META-INF/sbom/*.cdx.json
