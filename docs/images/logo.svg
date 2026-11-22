@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-labelledby="title desc">
+  <title id="title">LytgOS2 logo</title>
+  <desc id="desc">A dark rounded-square mark with a glowing gradient L, an orbital ring, three agent nodes, and a version 2 badge.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#111c2e"/>
+    </linearGradient>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="55%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="badge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.5"/>
+      <stop offset="65%" stop-color="#0b1220" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0b1220" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#1e3a5f" opacity="0.55"/>
+    </pattern>
+    <clipPath id="clip">
+      <rect x="32" y="32" width="448" height="448" rx="96"/>
+    </clipPath>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#bg)" stroke="#2a3b55" stroke-width="2"/>
+
+  <g clip-path="url(#clip)">
+    <rect x="32" y="32" width="448" height="448" fill="url(#dots)"/>
+    <circle cx="256" cy="250" r="190" fill="url(#halo)"/>
+    <circle cx="256" cy="250" r="178" fill="none" stroke="#1e3a5f" stroke-dasharray="3 14" stroke-width="2" opacity="0.7"/>
+    <ellipse cx="256" cy="250" rx="168" ry="86" transform="rotate(-25 256 250)" fill="none" stroke="url(#lg)" stroke-width="6" opacity="0.9" filter="url(#glow)"/>
+  </g>
+
+  <path d="M186 132 V330 H338" fill="none" stroke="url(#lg)" stroke-width="62" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  <path d="M186 132 V330 H338" fill="none" stroke="#e0f2fe" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity="0.18"/>
+
+  <g filter="url(#softGlow)">
+    <circle cx="104" cy="321" r="15" fill="#38bdf8"/>
+    <circle cx="104" cy="321" r="5" fill="#e0f2fe"/>
+    <circle cx="220" cy="172" r="15" fill="#34d399"/>
+    <circle cx="220" cy="172" r="5" fill="#e0f2fe"/>
+    <circle cx="408" cy="179" r="15" fill="#fbbf24"/>
+    <circle cx="408" cy="179" r="5" fill="#e0f2fe"/>
+  </g>
+
+  <circle cx="392" cy="392" r="54" fill="url(#badge)" stroke="#0b1220" stroke-width="10"/>
+  <text x="392" y="414" text-anchor="middle" fill="#06121f" font-family="'Segoe UI', 'Microsoft YaHei', sans-serif" font-size="62" font-weight="800">2</text>
+
+  <path d="M400 88 L408 106 L426 114 L408 122 L400 140 L392 122 L374 114 L392 106 Z" fill="#7dd3fc" opacity="0.9"/>
+  <path d="M120 112 L125 124 L137 129 L125 134 L120 146 L115 134 L103 129 L115 124 Z" fill="#a78bfa" opacity="0.75"/>
+</svg>

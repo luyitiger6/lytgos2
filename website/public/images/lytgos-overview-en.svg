@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 610" role="img" aria-labelledby="title desc">
+  <title id="title">LytgOS2 architecture overview</title>
+  <desc id="desc">Enterprise Agent teams run on LytgOS2, a private-deployed Agent Harness OS with Agent runtime, lifecycle and collaboration, private deployment, governance, and open standards.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#38bdf8"/></marker>
+    <style>text{font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}.title{font-size:18px;font-weight:700}.label{font-size:15px;font-weight:700}.body{font-size:13px}.small{font-size:12px}</style>
+  </defs>
+  <rect width="1080" height="610" rx="18" fill="#0b1020"/>
+  <text x="540" y="42" text-anchor="middle" fill="#7dd3fc" class="title" letter-spacing="2">ENTERPRISE AGENT TEAMS · L Y T G O S 2 · PRIVATE DEPLOYMENT</text>
+  <rect x="230" y="68" width="620" height="80" rx="12" fill="#112346" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="540" y="100" text-anchor="middle" fill="#93c5fd" class="label">Enterprise AI Applications</text>
+  <text x="540" y="126" text-anchor="middle" fill="#dbeafe" class="body">natural-language tasks · business workflows · enterprise systems</text>
+  <line x1="540" y1="148" x2="540" y2="183" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="130" y="188" width="820" height="292" rx="16" fill="#0c1a2e" stroke="#38bdf8" stroke-width="2"/>
+  <text x="540" y="221" text-anchor="middle" fill="#7dd3fc" class="title">LytgOS2 · Agent Harness OS</text>
+  <rect x="162" y="244" width="756" height="67" rx="10" fill="#10263a" stroke="#38bdf8"/>
+  <text x="540" y="272" text-anchor="middle" fill="#7dd3fc" class="label">Agent Runtime</text>
+  <text x="540" y="295" text-anchor="middle" fill="#d0f0ff" class="small">LLM · ReAct · memory · tools · REST service</text>
+  <rect x="162" y="333" width="360" height="116" rx="10" fill="#17102a" stroke="#a855f7"/>
+  <text x="342" y="361" text-anchor="middle" fill="#d8b4fe" class="label">Agent Lifecycle &amp; Collaboration</text>
+  <text x="342" y="387" text-anchor="middle" fill="#e9d5ff" class="small">one directory = one Agent · multi-Agent</text>
+  <text x="342" y="410" text-anchor="middle" fill="#e9d5ff" class="small">A2A · cross-node collaboration (vision)</text>
+  <text x="342" y="433" text-anchor="middle" fill="#c4b5fd" class="small">many Agents work as one team</text>
+  <rect x="558" y="333" width="360" height="116" rx="10" fill="#131a3a" stroke="#818cf8"/>
+  <text x="738" y="361" text-anchor="middle" fill="#c7d2fe" class="label">Private Deployment &amp; Governance</text>
+  <text x="738" y="387" text-anchor="middle" fill="#e0e7ff" class="small">single JAR · data stays in your domain</text>
+  <text x="738" y="410" text-anchor="middle" fill="#e0e7ff" class="small">sandbox · audit · environment secrets</text>
+  <text x="738" y="433" text-anchor="middle" fill="#a5b4fc" class="small">security from day one</text>
+  <rect x="258" y="502" width="564" height="65" rx="10" fill="#131a3a" stroke="#818cf8"/>
+  <text x="540" y="530" text-anchor="middle" fill="#c7d2fe" class="label">Agent Team</text>
+  <text x="540" y="552" text-anchor="middle" fill="#e0e7ff" class="small">decompose · assign · collaborate · deliver</text>
+</svg>
