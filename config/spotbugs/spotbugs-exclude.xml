@@ -8,4 +8,9 @@
     <Class name="io.lytgos.web.SystemApiController$InfoResponse"/>
     <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
   </Match>
+  <!-- Profile record 的列表字段在紧凑构造器中通过 List.copyOf 做了不可变复制。 -->
+  <Match>
+    <Class name="io.lytgos.core.agent.AgentProfile"/>
+    <Bug pattern="EI_EXPOSE_REP"/>
+  </Match>
 </FindBugsFilter>

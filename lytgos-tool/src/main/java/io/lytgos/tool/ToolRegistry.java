@@ -1,6 +1,6 @@
 package io.lytgos.tool;
 
-import io.lytgos.core.LytgTool;
+import io.lytgos.core.tool.LytgTool;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;

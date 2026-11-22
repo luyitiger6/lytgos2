@@ -1,5 +1,6 @@
 package io.lytgos.boot;
 
+import io.lytgos.boot.workspace.WorkspaceInitialization;
 import io.lytgos.core.Lytgos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,11 @@ public class LytgosApplication {
   private static final Logger LOG = LoggerFactory.getLogger(LytgosApplication.class);
 
   public static void main(String[] args) {
-    SpringApplication.run(LytgosApplication.class, args);
+    // 显式创建 SpringApplication，便于在数据源初始化前注册工作区目录初始化器。
+    SpringApplication application = new SpringApplication(LytgosApplication.class);
+    // 该初始化器会在 SQLite 数据源创建前执行，确保 .lytgos/ 存在。
+    application.addInitializers(new WorkspaceInitialization());
+    application.run(args);
   }
 
   @Bean

@@ -56,7 +56,7 @@
 | `settings.max_history_turns` | int | 否 | `20` | `1 ≤ n ≤ 100`；一轮 = 一条用户消息 + 最终回复 |
 | 未知字段 | — | — | — | 记录告警并忽略；必填缺失则 Agent 校验失败 |
 
-**Profile 运行时对象**（`io.lytgos.core.model.Profile`）：`name`、`description`、`identity`、`provider`、`tools`、`mcpServers`、`channels`、`bootstrap`、`schedules`、`settings`、`directory`、`body`、`skills`。`directory` 与 `body` 不来自 frontmatter，由加载器填充。
+**Profile 运行时对象**（`io.lytgos.core.agent.AgentProfile`）：`name`、`description`、`identity`、`provider`、`tools`、`mcpServers`、`channels`、`bootstrap`、`schedules`、`settings`、`directory`、`body`、`skills`。`directory` 与 `body` 不来自 frontmatter，由加载器填充。
 
 ### 1.3 ScheduleDefinition
 
