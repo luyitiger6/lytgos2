@@ -14,4 +14,15 @@
   <artifactId>lytgos-core</artifactId>
   <name>lytgos-core</name>
   <description>Core contracts and Agent runtime engine</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+  </dependencies>
 </project>

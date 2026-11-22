@@ -2,8 +2,8 @@ package io.lytgos.tool;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.lytgos.core.LytgTool;
-import io.lytgos.core.ToolResult;
+import io.lytgos.core.tool.LytgTool;
+import io.lytgos.core.tool.ToolResult;
 import org.junit.jupiter.api.Test;
 
 class ToolRegistryTest {

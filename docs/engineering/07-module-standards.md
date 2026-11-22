@@ -40,6 +40,13 @@
 ## 4. 命名与包结构
 
 - Java 类名前缀 `Lytgos*` 只用于入口/产品级类型；普通领域类型用职责命名。
-- 包名：`io.lytgos.<module>.<layer>`，层名限定为 `api`、`engine`、`port`、`model`、`config`、`store`、`entity`、`repository`、`sandbox`、`mcp`、`builtin`。
-- 不新增 `util` / `common` 大杂烩包；共享契约放 `lytgos-core` 的 `port` 或 `model`。
-- 测试包与被测包同名，测试类以 `Test` 结尾。
+- 包名：`io.lytgos.<module>.<domain>`；`<domain>` 是聚合的业务或技术领域，不使用 `model`、`service`、`config` 这类分层桶作为顶层包名。
+- 当前领域示例：
+  - `lytgos-core`：`agent`（`AgentProfile` 运行时配置）、`tool`、`audit`、`session`
+  - `lytgos-provider`：模块根包为 provider 域，`tool` 为工具 schema 翻译子域
+  - `lytgos-storage`：`llm`
+  - `lytgos-boot`：`persistence`、`provider`、`agent`、`workspace`
+  - `lytgos-web`：`api`、`openapi`、`system`
+- 模块根包只放模块级类型（如 `LytgosApplication`、`StorageModule`、`Lytgos`）和 `package-info.java`；具体领域放子包。
+- 不新增 `util` / `common` 大杂烩包；共享契约放 `lytgos-core` 的对应领域包。
+- 测试包与被测包同名；单元测试以 `Test` 结尾，集成测试以 `IT` 结尾并使用 `@Tag("integration")`。
