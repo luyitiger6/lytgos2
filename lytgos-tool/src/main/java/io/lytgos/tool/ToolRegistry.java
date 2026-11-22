@@ -6,7 +6,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
-/** In-memory registry for built-in Tools, MCP Tools, and {@code @Tool} beans. */
+/**
+ * In-memory registry for built-in Tools, MCP Tools, and {@code @Tool} beans.
+ *
+ * @author LytgOS2 Team
+ */
 public final class ToolRegistry {
 
   private final Map<String, LytgTool> tools = new ConcurrentHashMap<>();

@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/** System endpoints defined by the 1.0 REST contract. */
+/**
+ * System endpoints defined by the 1.0 REST contract.
+ *
+ * @author LytgOS2 Team
+ */
 @RestController
 @RequestMapping("/api/v1")
 @Tag(name = "System", description = "Health and runtime information")

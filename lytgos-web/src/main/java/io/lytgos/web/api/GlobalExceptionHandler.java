@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-/** Maps uncaught exceptions to the unified API envelope without leaking internals. */
+/**
+ * Maps uncaught exceptions to the unified API envelope without leaking internals.
+ *
+ * @author LytgOS2 Team
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

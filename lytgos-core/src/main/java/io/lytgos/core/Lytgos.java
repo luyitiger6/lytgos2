@@ -1,6 +1,10 @@
 package io.lytgos.core;
 
-/** Product constants shared by all modules. */
+/**
+ * Product constants shared by all modules.
+ *
+ * @author LytgOS2 Team
+ */
 public final class Lytgos {
 
   public static final String NAME = "LytgOS2";
