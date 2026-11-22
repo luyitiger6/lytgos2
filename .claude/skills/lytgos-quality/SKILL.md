@@ -38,13 +38,13 @@ description: >-
 | ArchUnit | surefire 报告 | 改依赖方向，不要放宽规则 |
 | 测试 | `target/surefire-reports/` | 修代码或补测试，不跳过 |
 
-### 2. 跑 P3C 报告（可选）
+### 2. 跑 P3C 报告（补充，非阻断）
 
 ```bash
 ./mvnw -B -ntp -Pp3c verify
 ```
 
-P3C 是补充报告，不阻断合并。按“Google 优先”处理冲突；只汇总高价值问题，不把 P3C 噪声当成主门禁失败。
+P3C 是补充报告，不阻断合并。按“Google 优先”处理冲突；只汇总高价值问题，不把 P3C 噪声当成主门禁失败。CI 的 `p3c` job 每次 push/PR 都会运行并上传 `pmd.xml`；报告中出现 `<error>` 时 job 失败，P3C 违规本身仍不阻断。
 
 ### 3. 跑安全门禁
 

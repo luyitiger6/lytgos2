@@ -24,6 +24,7 @@
 | google-java-format | 2.0.0（GOOGLE 风格） | 格式唯一权威 |
 | Checkstyle | 10.21.4 | 命名、import、行宽等规则 |
 | PMD | 7.17.0 | 缺陷、复杂度、性能、安全规则 |
+| ASM | 9.7 | 覆盖 PMD 6.55 的默认 ASM，支持 Java 21 class 文件 |
 | SpotBugs | 4.10.4.0 | 字节码缺陷 |
 | FindSecBugs | 1.14.0 | SpotBugs 安全插件 |
 | JaCoCo | 0.8.16 | 覆盖率报告 |
@@ -39,7 +40,7 @@
 - SAA starter 默认关闭 DashScope autoconfigure，避免缺少 key 时启动失败；需要 DashScope/Qwen 时再开启并注入 `DASHSCOPE_API_KEY`。
 - Spring Boot 3.5 OSS 已于 2026-06-30 EOL。当前选择是为兼容 SAA 的设计基线；升级到 Boot 4 需要等 SAA 的 Boot 4 兼容版本 GA。
 - Spring Boot 3.5 使用 Jackson 2；不要引入依赖 Jackson 3 的库。
-- P3C 2.1.1 基于 PMD 6.15；不能和 PMD 7 在同一次 Maven 调用中运行。
+- P3C 2.1.1 使用 PMD 6.55.0；默认 ASM 无法读取 Java 21 class 文件，`p3c` profile 覆盖为 ASM 9.7。P3C 仍不能和 PMD 7 在同一次 Maven 调用中运行。
 
 ## 4. 升级规则
 

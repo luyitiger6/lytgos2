@@ -23,12 +23,13 @@
 
 ## 3. P3C 的定位
 
-P3C 2.1.1 基于 PMD 6.15，不能和 PMD 7 在同一次 Maven 调用中共存。因此：
+P3C 2.1.1 使用 PMD 6.55.0，不能和 PMD 7 在同一次 Maven 调用中共存。因此：
 
-- P3C 是 **IDE 实时提示 + `-Pp3c` 报告**，不是主门禁。
+- P3C 是 **IDE 实时提示 + `-Pp3c` 报告 + CI `p3c` job**，不是主门禁。
 - `./mvnw -Pp3c verify` 使用 PMD 6.55 + P3C，`failOnViolation=false`。
 - 不要把 `-Pp3c` 和默认 `verify` 放在同一次 `mvn` 调用里。
 - 如果以后治理要求 P3C 阻断，必须另起 CI job，先建立 baseline，再逐条清理；不要直接打开 `failOnViolation=true`。
+- P3C 使用 PMD 6.55.0，默认 ASM 无法读取 Java 21 class 文件；`p3c` profile 覆盖为 ASM 9.7，确保分析真正执行。CI 的 `p3c` job 会上传 `pmd.xml`，报告中出现 `<error>` 时失败；P3C 违规本身仍不阻断。
 
 ## 4. 规则冲突处理
 
