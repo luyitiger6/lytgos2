@@ -36,6 +36,34 @@ jobs:
             **/target/checkstyle-result.xml
           if-no-files-found: ignore
 
+  p3c:
+    name: Alibaba P3C report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Make wrapper executable
+        run: chmod +x mvnw
+      - name: P3C report
+        run: ./mvnw -B -ntp -Pp3c verify -DskipTests
+      - name: Ensure P3C analysis produced no errors
+        run: |
+          if grep -R --include='pmd.xml' '<error ' .; then
+            echo "P3C analysis errors found; see the pmd.xml reports above." >&2
+            exit 1
+          fi
+      - name: Upload P3C reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: p3c-reports
+          path: '**/target/pmd.xml'
+          if-no-files-found: error
+
   secrets:
     name: Secret scan
     runs-on: ubuntu-latest

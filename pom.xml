@@ -46,6 +46,8 @@
     <enforcer.version>3.7.0</enforcer.version>
     <p3c.plugin.version>3.21.2</p3c.plugin.version>
     <p3c.pmd.version>2.1.1</p3c.pmd.version>
+    <!-- PMD 6.55 (used by P3C) bundles ASM 9.4, which cannot read Java 21 class files. -->
+    <asm.version>9.7</asm.version>
   </properties>
 
   <modules>
@@ -403,6 +405,11 @@
                 <groupId>com.alibaba.p3c</groupId>
                 <artifactId>p3c-pmd</artifactId>
                 <version>${p3c.pmd.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>${asm.version}</version>
               </dependency>
             </dependencies>
             <configuration>
