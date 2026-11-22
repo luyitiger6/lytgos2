@@ -5,7 +5,11 @@ import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Model.CommandSpec;
 
-/** Picocli entry point skeleton. Subcommands will be added incrementally. */
+/**
+ * Picocli entry point skeleton. Subcommands will be added incrementally.
+ *
+ * @author LytgOS2 Team
+ */
 @CommandLine.Command(
     name = "lytgos",
     mixinStandardHelpOptions = true,

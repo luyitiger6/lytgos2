@@ -37,7 +37,7 @@ jobs:
           if-no-files-found: ignore
 
   p3c:
-    name: Alibaba P3C report
+    name: Alibaba P3C gate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
           cache: maven
       - name: Make wrapper executable
         run: chmod +x mvnw
-      - name: P3C report
+      - name: P3C gate
         run: ./mvnw -B -ntp -Pp3c verify -DskipTests
       - name: Ensure P3C analysis produced no errors
         run: |

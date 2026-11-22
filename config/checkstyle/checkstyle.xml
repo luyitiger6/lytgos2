@@ -8,7 +8,7 @@
 
   Scope: correctness-oriented style rules that Spotless/google-java-format does
   not cover. Formatting is owned by Spotless; do not add duplicate formatting
-  rules here. Alibaba P3C is a separate, report-only profile.
+  rules here. Alibaba P3C is a separate, blocking profile.
 -->
 <module name="Checker">
   <property name="charset" value="UTF-8"/>

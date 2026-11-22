@@ -27,7 +27,7 @@
 - Spring AI 不能单独升级到 1.1.8；必须与 SAA 1.1.2.x 的 autoconfigure 对齐。
 - `lytgos-provider` 放入 SAA starter，默认 `spring.ai.dashscope.enabled=false`；需要 DashScope/Qwen 时再开启并注入 `DASHSCOPE_API_KEY`。
 - Boot 3.5 的 OSS 安全补丁已停止；需要持续关注 CVE，必要时使用商业补丁或提前规划 Boot 4 升级。
-- 质量门禁、无 Prometheus、Google 格式优先、P3C 报告模式等决策不受影响。
+- 质量门禁、无 Prometheus、Google 格式优先、P3C 门禁等决策不受影响。
 
 ## 备选方案
 

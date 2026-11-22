@@ -59,7 +59,7 @@ LytgOS2 是一个 Java 原生、可私有部署、可审计的企业级 Agent OS
 - Picocli
 - SnakeYAML、MCP Java SDK 2.2.0、Logback/SLF4J
 - 观测：health/info + 结构化日志 + 审计表；1.0 不做 Prometheus/Grafana（ADR 0003）
-- 质量：Spotless + google-java-format（GOOGLE 为格式权威）、Checkstyle、PMD 7、SpotBugs + FindSecBugs、ArchUnit、JaCoCo；P3C 为补充报告（ADR 0002）
+- 质量：Spotless + google-java-format（GOOGLE 为格式权威）、Checkstyle、PMD 7、SpotBugs + FindSecBugs、ArchUnit、JaCoCo；P3C 为阻断门禁（ADR 0002）
 
 ## 架构
 
@@ -112,7 +112,7 @@ curl http://localhost:8080/api/v1/health
 curl http://localhost:8080/api/v1/info
 curl http://localhost:8080/v3/api-docs
 
-# P3C 报告模式（非阻断）
+# P3C 阻断门禁
 ./mvnw -Pp3c verify
 
 # 安全扫描（需要 NVD_API_KEY）

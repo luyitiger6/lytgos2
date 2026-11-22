@@ -33,7 +33,7 @@ lytgos-boot        （唯一组装根，依赖全部模块）
 # 跑安全扫描（需要 NVD_API_KEY）
 NVD_API_KEY=... ./mvnw -Psecurity verify
 
-# P3C 报告模式（不阻断）
+# P3C 阻断门禁
 ./mvnw -Pp3c verify
 
 # 跳过测试做快速编译
@@ -61,7 +61,7 @@ Windows 使用 `mvnw.cmd` 替代 `./mvnw`。
 |---|---|---|
 | 默认 | 快速质量门禁 | 每个 PR 必跑 |
 | `security` | Dependency-Check + CycloneDX SBOM | CI 或发版前跑；本地可选 |
-| `p3c` | PMD 6 + Alibaba P3C 报告 | 非阻断；不要和 PMD 7 同一次调用 |
+| `p3c` | PMD 6 + Alibaba P3C 门禁 | 阻断；不要和 PMD 7 同一次调用 |
 
 ## 5. 版本与插件规则
 

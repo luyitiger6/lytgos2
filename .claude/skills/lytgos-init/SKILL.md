@@ -34,7 +34,7 @@ description: >-
 - Boot 3.5 OSS 已 EOL；这是兼容 SAA 的设计基线，升级 Boot 4 必须等 SAA 的 Boot 4 兼容版本 GA（ADR 0004）。
 - Spring MVC + 虚拟线程；不引入 WebFlux。
 - 1.0 不做 Prometheus/Grafana/trace ID 串联；只保留 health/info + 日志 + 审计表。
-- 格式唯一权威是 Spotless + google-java-format（GOOGLE）；P3C 是补充报告，不阻断。
+- 格式唯一权威是 Spotless + google-java-format（GOOGLE）；P3C 是阻断门禁。
 - 密钥只用 `${ENV_VAR}`；不写明文。
 - 只新增基础设施与配置，不替换业务代码。
 
@@ -73,7 +73,7 @@ description: >-
 - SpotBugs 4.10.4.0 + FindSecBugs 1.14.0，`verify` 阶段 `check`。
 - JaCoCo 0.8.16：先报告，不设阻断阈值。
 - ArchUnit 1.5.1：模块无环、core 独立、web 不依赖 adapter、禁止标准流。
-- P3C：`p3c` profile，PMD 6.55 + p3c-pmd 2.1.1，`failOnViolation=false`；不能和 PMD 7 同一次调用。
+- P3C：`p3c` profile，PMD 6.55 + p3c-pmd 2.1.1，`failOnViolation=true`；通过 ASM 9.7 支持 Java 21 class 文件；不能和 PMD 7 同一次调用。
 
 ### 5. 安全与 CI
 
@@ -102,7 +102,7 @@ curl -s http://localhost:8080/v3/api-docs
 - [ ] 虚拟线程、优雅停机、请求上限生效
 - [ ] 日志在 prod 为 ECS JSON，且无明文密钥
 - [ ] Spotless/Checkstyle/PMD/SpotBugs/ArchUnit/JaCoCo 全部接入 `verify`
-- [ ] `-Pp3c` 可跑且不阻断
+- [ ] `-Pp3c` 可跑且违规阻断
 - [ ] CI 与 pre-commit 文档可执行
 - [ ] 版本矩阵、ADR、CLAUDE.md 已同步
 
@@ -111,5 +111,5 @@ curl -s http://localhost:8080/v3/api-docs
 - 不实现 Provider/ReAct/Memory/Tool/Web 业务逻辑。
 - 不添加 Prometheus、Grafana、认证、RBAC、SSE/WebSocket。
 - 不在未修订 `ReleaseBaseline`/ADR 的情况下移除 SAA 或切换 Boot 4。
-- 不把 P3C 设为主门禁，不和 PMD 7 混跑。
+- 不把 P3C 和 PMD 7 混跑；P3C 作为独立阻断门禁。
 - 不用 `-DskipTests` 或关闭规则来“让构建变绿”。

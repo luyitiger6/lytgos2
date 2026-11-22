@@ -8,7 +8,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-/** LytgOS2 Spring Boot entry point. */
+/**
+ * LytgOS2 Spring Boot entry point.
+ *
+ * @author LytgOS2 Team
+ */
 @SpringBootApplication(scanBasePackages = "io.lytgos")
 public class LytgosApplication {
 

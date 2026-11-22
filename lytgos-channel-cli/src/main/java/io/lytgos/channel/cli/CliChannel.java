@@ -2,7 +2,11 @@ package io.lytgos.channel.cli;
 
 import java.io.PrintWriter;
 
-/** CLI channel skeleton. */
+/**
+ * CLI channel skeleton.
+ *
+ * @author LytgOS2 Team
+ */
 public final class CliChannel {
 
   public static final String NAME = "cli";

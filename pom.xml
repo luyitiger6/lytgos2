@@ -425,7 +425,7 @@
                 <ruleset>rulesets/java/ali-other.xml</ruleset>
                 <ruleset>rulesets/java/ali-set.xml</ruleset>
               </rulesets>
-              <failOnViolation>false</failOnViolation>
+              <failOnViolation>true</failOnViolation>
             </configuration>
           </plugin>
         </plugins>

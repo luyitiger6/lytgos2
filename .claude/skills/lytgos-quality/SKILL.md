@@ -38,13 +38,13 @@ description: >-
 | ArchUnit | surefire 报告 | 改依赖方向，不要放宽规则 |
 | 测试 | `target/surefire-reports/` | 修代码或补测试，不跳过 |
 
-### 2. 跑 P3C 报告（补充，非阻断）
+### 2. 跑 P3C 门禁（阻断）
 
 ```bash
 ./mvnw -B -ntp -Pp3c verify
 ```
 
-P3C 是补充报告，不阻断合并。按“Google 优先”处理冲突；只汇总高价值问题，不把 P3C 噪声当成主门禁失败。CI 的 `p3c` job 每次 push/PR 都会运行并上传 `pmd.xml`；报告中出现 `<error>` 时 job 失败，P3C 违规本身仍不阻断。
+P3C 现在是阻断门禁，违规会让构建失败。按“Google 优先”处理冲突；误报使用窄范围 suppression 并注明原因。CI 的 `p3c` job 每次 push/PR 都会运行并上传 `pmd.xml`；报告中出现 `<error>` 或 P3C 违规时 job 失败。
 
 ### 3. 跑安全门禁
 
@@ -96,6 +96,6 @@ NVD_API_KEY=... ./mvnw -B -ntp -Psecurity verify
 
 - 不添加 Prometheus、Grafana、认证、RBAC、SSE/WebSocket。
 - 不在未修订 `ReleaseBaseline`/ADR 的情况下移除 SAA 或切换 Boot 4。
-- 不把 P3C 硬门禁和 PMD 7 放在同一次 Maven 调用。
+- 不把 P3C 门禁和 PMD 7 放在同一次 Maven 调用。
 - 不删除测试或降低 ArchUnit 规则来换取绿灯。
 - 不在没有实际运行的情况下写“测试通过”。
