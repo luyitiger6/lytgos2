@@ -282,7 +282,7 @@ lytgos profile delete <name>    # 删除 Agent（整个目录）
 
 Provider 是 LLM 调用的统一抽象。所有 LLM 调用通过 Provider 接口走，Agent 不感知具体调的是哪家。
 
-核心阶段直接基于 Spring AI Alibaba 的 `ChatClient` 实现。Spring AI Alibaba 已经做好了主流 LLM（DeepSeek、通义、文心、Kimi、智谱、混元、豆包、Anthropic、OpenAI 等）的 connector，LytgOS2 把它们包装成 Provider，不重复造轮子。
+核心阶段直接基于 Spring AI Alibaba 的 `ChatModel` 实现。Spring AI Alibaba 已经做好了主流 LLM（DeepSeek、通义、文心、Kimi、智谱、混元、豆包、Anthropic、OpenAI 等）的 connector，LytgOS2 把它们包装成 Provider，不重复造轮子；1.0 不使用 ChatClient 的自动 Tool 执行。
 
 每个 Provider 实例配置：
 - `provider 名`（deepseek、qwen、kimi 等）
@@ -581,7 +581,7 @@ LytgOS2 作为开源项目，需要一个独立的主页作为对外门面，讲
 
 ### 8.4 兼容性
 
-- **JDK**：21 及以上（Spring Boot 3.x 要求）
+- **JDK**：21 及以上（Spring Boot 3.5.x 要求）
 - **操作系统**：Linux 主流发行版（Ubuntu 22.04+、CentOS 8+、Debian 11+、Alibaba Cloud Linux 3、Rocky Linux）
 - **LLM 协议**：OpenAI 兼容协议是事实标准，只要 Provider 实现这套协议，LytgOS2 就能直接接
 

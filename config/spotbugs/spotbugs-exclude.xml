@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <Match>
+    <Class name="~.*\.package-info"/>
+  </Match>
+  <!-- DTO stores a defensive, immutable copy; SpotBugs cannot infer List.copyOf(). -->
+  <Match>
+    <Class name="io.lytgos.web.SystemApiController$InfoResponse"/>
+    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+  </Match>
+</FindBugsFilter>

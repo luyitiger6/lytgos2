@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="LytgOS2 PMD Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+  <description>
+    LytgOS2 PMD 7 baseline. Formatting and naming are owned by Spotless and
+    Checkstyle; this ruleset focuses on defects, complexity, performance and
+    security-sensitive patterns.
+  </description>
+
+  <rule ref="category/java/errorprone.xml">
+    <!-- ArchUnit tests use @ArchTest fields, not JUnit @Test methods. -->
+    <exclude name="TestClassWithoutTestCases"/>
+  </rule>
+  <rule ref="category/java/bestpractices.xml">
+    <!-- Too strict for expressive AssertJ tests; keep test intent readable. -->
+    <exclude name="UnitTestContainsTooManyAsserts"/>
+  </rule>
+  <rule ref="category/java/performance.xml"/>
+  <rule ref="category/java/security.xml"/>
+</ruleset>

@@ -1,6 +1,45 @@
 spring:
   application:
-    name: lytgos2
+    name: lytgos
+  # Spring AI Alibaba is on the classpath for connector compatibility. Enable it
+  # together with DASHSCOPE_API_KEY when a DashScope/Qwen provider is configured.
+  ai:
+    dashscope:
+      enabled: false
+  threads:
+    virtual:
+      enabled: true
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
 
 server:
   port: 8080
+  shutdown: graceful
+  max-http-request-header-size: 16KB
+  tomcat:
+    max-http-form-post-size: 32KB
+    max-swallow-size: 32KB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+logging:
+  level:
+    io.lytgos: INFO
+
+lytgos:
+  workspace: .lytgos

@@ -127,7 +127,7 @@ Claude Code 是主推的 AI agent，Spec-Kit 官方支持 Claude Code。具体�
 
 | # | 原则 | 说明 |
 | --- | --- | --- |
-| 1 | JDK 21 + Spring Boot 3.x 单体应用 | Maven 多模块（9 个），单二进制部署 |
+| 1 | JDK 21 + Spring Boot 3.5.x 单体应用 | Maven 多模块（9 个），单二进制部署 |
 | 2 | 五大核心能力优先 | 核心阶段交付运行时内核，企业级治理层放扩展阶段 |
 | 3 | 自实现 ReAct loop | 不直接用 Spring AI 的 Agent 抽象 |
 | 4 | **Spring AI 只用一半** | 只用 Provider 抽象、协议转换、@Tool schema 生成；**禁用自动 tool 执行**；tool 调度完全由 `ReActLoop` + `ToolExecutor` 控制。**最容易被写错的一条** |
@@ -162,7 +162,7 @@ Claude Code 是主推的 AI agent，Spec-Kit 官方支持 Claude Code。具体�
 
 `/speckit.plan` 命令的输入是技术方案 + 上一步的 `spec.md` + `constitution.md`，输出是实施 plan。Plan 包含：
 
-- 技术栈选型（JDK 21 + Spring Boot 3.x + Spring AI Alibaba + SQLite + Picocli）
+- 技术栈选型（JDK 21 + Spring Boot 3.5.x + Spring AI Alibaba + SQLite + Picocli）
 - 9 个 Maven 模块的职责（对照技术方案第 10 章）
 - 关键技术决策的展开（自实现 ReAct、Spring AI 只用一半的边界、Plugin Tool 三档、SQLite + MEMORY.md、审计 day one 落库）
 - 数据流和模块间协作（`PromptBuilder` + `ProviderService` + `ToolExecutor` + `MemoryService` 三层门面）

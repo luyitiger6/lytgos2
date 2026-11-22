@@ -2,6 +2,8 @@
 
 这份调研聚焦"**Agent OS**"这件事本身。先把 Agent OS 是什么讲清楚，再看业界两个最具代表性的开源 Agent OS 项目（**OpenClaw** 和 **Hermes Agent**）分别做到了什么、企业用得怎么样、留下了什么空白，然后看 Java 生态在这件事上的位置，最后落到 **LytgOS2** 的定位和愿景。LytgOS2 想做的事是清晰的：一个企业能完全掌控的、Java 原生的、私有可审计的 Agent 统一底座。调研要回答的是，业界已经做了什么，这件事在 Java 生态里为什么还没人做，以及 LytgOS2 想把它做成什么样子。
 
+> **2026-11-22 注**：本文是行业调研，保留写作时的背景判断。1.0 实现基线保持 Spring Boot 3.5.x + Spring AI 1.1.x + Spring AI Alibaba 1.1.2.x；以 `docs/adr/0004-keep-spring-boot-3-5-and-saa.md` 和 `docs/engineering/00-versions.md` 为准。
+
 ---
 
 ## 1. 什么是 Agent OS
@@ -155,7 +157,7 @@ Java/Spring 生态在企业后端是极其完整的，从 Web 框架（**Spring 
 3. **JVM 成熟的运维工具链能直接复用。** Nacos、Sentinel、SkyWalking、Arthas、JFR、Prometheus + Grafana，跟 Java Agent OS 是无缝的，企业现有运维体系不需要为它单独搭一套。
 4. **跟企业现有 Java 系统对接成本最低。** Tool 直接调企业现有 Java 服务，不需要写跨语言的胶水代码。
 5. **严监管行业的私有部署要求让 Java 成为确定性选择。** 这些行业的核心系统大量是 Java，私有部署、完全审计、合规过审是硬要求，用 Java 实现可以走企业现有的 Java 审计流程，不需要为新组件单独搭一套合规通道。
-6. **GraalVM Native Image 让 Java 的启动和内存不再是短板。** JDK 21 + Spring Boot 3.x + GraalVM 能做到接近 Node.js 和 Python 的启动速度和内存占用，单二进制部署可行。需要说明的是，Native Image 对 Spring AI 这类重反射、重动态代理的框架仍有编译期配置的工程代价，AOT 适配不是零成本，但这条路是通的，且在持续成熟。
+6. **GraalVM Native Image 让 Java 的启动和内存不再是短板。** JDK 21 + Spring Boot 3.5.x + GraalVM 能做到接近 Node.js 和 Python 的启动速度和内存占用，单二进制部署可行。需要说明的是，Native Image 对 Spring AI 这类重反射、重动态代理的框架仍有编译期配置的工程代价，AOT 适配不是零成本，但这条路是通的，且在持续成熟。
 
 ### 4.4 Spring AI 的崛起是先行信号
 

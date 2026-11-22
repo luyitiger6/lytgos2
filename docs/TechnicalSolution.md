@@ -12,9 +12,11 @@
 
 ## 1. 方案概述
 
-LytgOS2 是一个 **Spring Boot 3.x** 单体应用，跑在 **JDK 21** 上，基于 **Spring AI Alibaba** 做 LLM 调用，自己实现 **ReAct loop** 作为 Agent 核心。整个 LytgOS2 是一个可执行 JAR，单二进制部署，扩展阶段引入 **GraalVM Native Image** 进一步压缩启动时间和内存占用。
+LytgOS2 是一个 **Spring Boot 3.5.x** 单体应用，跑在 **JDK 21** 上，基于 **Spring AI Alibaba** 做 LLM 调用，自己实现 **ReAct loop** 作为 Agent 核心。整个 LytgOS2 是一个可执行 JAR，单二进制部署，扩展阶段引入 **GraalVM Native Image** 进一步压缩启动时间和内存占用。
 
-> **技术栈选型一句话总结**：JDK 21 + Spring Boot 3.x + Spring AI Alibaba + 自实现 ReAct loop + SQLite + Picocli 命令行。
+> **技术栈选型一句话总结**：JDK 21 + Spring Boot 3.5.x + Spring AI Alibaba + 自实现 ReAct loop + SQLite + Picocli 命令行。
+>
+> **2026-11-22 技术栈基线确认**：保持 Spring Boot 3.5.16 + Spring AI 1.1.2 + Spring AI Alibaba 1.1.2.4-security-fix。Boot 4 方案因 SAA 兼容性放弃，详见 `docs/adr/0004-keep-spring-boot-3-5-and-saa.md`。
 
 ### 1.1 关键技术决策
 
@@ -54,7 +56,7 @@ Tool 的实际调度和执行完全由 LytgOS2 自己的 **`ReActLoop`** 加 **`
 
 LytgOS2 的完整技术栈：
 
-1. **JDK 21** 加 **Spring Boot 3.x**（virtual thread 处理高并发）
+1. **JDK 21** 加 **Spring Boot 3.5.x**（virtual thread 处理高并发）
 2. **Spring AI** 加 **Spring AI Alibaba**（LLM Provider 抽象，复用现成的主流 LLM connector）
 3. 自实现 **ReAct loop**（Agent 核心循环）
 4. **Spring MVC**（HTTP API 服务层）
@@ -858,7 +860,7 @@ mvn clean package
 
 ## 15. 总结
 
-LytgOS2 技术方案核心：**JDK 21 + Spring Boot 3.x** 单体应用，自实现 ReAct loop，基于 **Spring AI Alibaba** 做 LLM 调用（只用其协议转换和 schema 生成，不用其自动 tool 执行），SQLite 持久化加 `MEMORY.md` 文件，Picocli 命令行。
+LytgOS2 技术方案核心：**JDK 21 + Spring Boot 3.5.x** 单体应用，自实现 ReAct loop，基于 **Spring AI Alibaba** 做 LLM 调用（只用其协议转换和 schema 生成，不用其自动 tool 执行），SQLite 持久化加 `MEMORY.md` 文件，Picocli 命令行。
 
 方案围绕五大核心能力展开：
 

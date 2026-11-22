@@ -6,7 +6,7 @@
 
 LytgOS2 是一个 Java 原生、可私有部署、可审计的企业级 Agent OS。1.0 交付运行时内核——五大核心能力：LLM Provider 抽象、ReAct 循环、Memory、Tool 体系和 Web Service。企业治理层（多租户、SSO、完整审计、IM 渠道）属于扩展/社区范围。Agent 由目录定义，不是写后端代码写出来的。
 
-**当前仓库状态：** 已初始化 Maven 九模块骨架和 Git 仓库，Spec-Kit 工作区（`.specify/`）与 Claude Code skills（`.claude/skills/`）已就位；`mvn clean package` 可构建，`lytgos-boot` 可启动并暴露 `/api/v1/health` 与 `/api/v1/info`。尚无 Agent 业务实现、CLI 子命令或测试。provider 和 storage 目前只是接口/占位类，尚未引入 Spring AI Alibaba、JPA/SQLite、MCP 依赖。
+**当前仓库状态：** 工程地基已完成：九模块 Maven 骨架、Maven Wrapper、Spring Boot 3.5.16、Spring AI 1.1.2 + Spring AI Alibaba 1.1.2.4-security-fix、统一 API 信封、OpenAPI、结构化日志、虚拟线程、Spotless/Checkstyle/PMD 7/SpotBugs/ArchUnit/JaCoCo 门禁、CI 与 pre-commit 已就位；`./mvnw clean verify` 通过，`lytgos-boot` 可启动并暴露 `/api/v1/health`、`/api/v1/info` 与 `/v3/api-docs`。已有 context smoke、HTTP 契约、模块架构和 ToolRegistry 测试；尚无 Agent 业务实现或 CLI 子命令。provider/storage 仍是占位类，JPA/SQLite/MCP 依赖在 US-1/US-4 引入。
 
 ## 权威文档
 
@@ -17,6 +17,8 @@ LytgOS2 是一个 Java 原生、可私有部署、可审计的企业级 Agent OS
 | `docs/DemandAnalysis.md` | 需求与 1.0 验收标准 |
 | `docs/IndustryResearch.md` | 定位、竞争背景、项目为什么存在 |
 | `docs/AiProgrammingGuide.md` | Spec-Kit 流程与 US-1…US-5 实施顺序 |
+| `docs/engineering/` | 工程基线：版本、构建、运行时、API、质量、安全、CI、模块规范 |
+| `docs/adr/` | 架构决策记录（Boot 3.5 + SAA、Google vs P3C、无 Prometheus） |
 | `README.md` | 面向人的项目概览、快速开始、路线图和安全边界 |
 
 文档冲突时的优先级：**ReleaseBaseline > TechnicalSolution > DemandAnalysis > IndustryResearch > AiProgrammingGuide**。
@@ -48,13 +50,16 @@ LytgOS2 是一个 Java 原生、可私有部署、可审计的企业级 Agent OS
 
 ## 目标技术栈
 
-- JDK 21（基线；允许 JDK 21+ 运行；项目 POM 和 IDEA project SDK 已统一为 21）。Spring Boot 3.x
-- Spring AI + Spring AI Alibaba，用于 LLM connector
+- JDK 21（基线；允许 JDK 21+ 运行；项目 POM 和 IDEA project SDK 已统一为 21）。Spring Boot 3.5.16
+- Spring AI 1.1.2 + Spring AI Alibaba 1.1.2.4-security-fix，用于 Provider 抽象和 LLM connector；按设计文档保留 SAA（ADR 0004）
+- SAA starter 在 `lytgos-provider` classpath，默认 `spring.ai.dashscope.enabled=false`；启用 DashScope/Qwen 时配置 `DASHSCOPE_API_KEY`
+- Spring Boot 3.5 OSS 已于 2026-06-30 EOL；当前为兼容 SAA 的设计基线，升级计划见 ADR 0004
 - 自实现 ReAct 循环
 - SQLite + Spring Data JPA
 - Picocli
-- SnakeYAML、MCP Java SDK、Logback/SLF4J
-- Micrometer + Prometheus（后续）
+- SnakeYAML、MCP Java SDK 2.2.0、Logback/SLF4J
+- 观测：health/info + 结构化日志 + 审计表；1.0 不做 Prometheus/Grafana（ADR 0003）
+- 质量：Spotless + google-java-format（GOOGLE 为格式权威）、Checkstyle、PMD 7、SpotBugs + FindSecBugs、ArchUnit、JaCoCo；P3C 为补充报告（ADR 0002）
 
 ## 架构
 
@@ -88,39 +93,39 @@ LytgOS2 是一个 Java 原生、可私有部署、可审计的企业级 Agent OS
 7. **审计 day one。** 从第一版实现起写 `tool_invocations` 和 `llm_calls`，不要后期从日志反解析。
 8. **Sandbox 接口先行。** 1.0 只实现 `WhitelistSandbox`（路径/Shell 命令/域名白名单）。不要使用 Java `SecurityManager`；它在受支持的 JDK 上不可用。
 9. **密钥通过环境变量占位符注入**（`${ENV_VAR}`），绝不把明文密钥写进 `AGENT.md` 或提交的配置。
-10. **核心 1.0 不做认证、SSE/WebSocket、多租户、SSO、IM 渠道、persona、知识库、向量记忆、Tool Policy、Agent 上传/生命周期 API、完整容器沙箱、Provider failover、Web 仪表板、完整审计查询/SIEM、AgentScheduler 运行时 cron 增删改。** 完整清单以 `docs/ReleaseBaseline.md` 第 3.3 节为准。
+10. **核心 1.0 不做认证、SSE/WebSocket、多租户、SSO、IM 渠道、persona、知识库、向量记忆、Tool Policy、Agent 上传/生命周期 API、完整容器沙箱、Provider failover、Web 仪表板、Prometheus/Grafana、trace ID 串联、完整审计查询/SIEM、AgentScheduler 运行时 cron 增删改。** 完整清单以 `docs/ReleaseBaseline.md` 第 3.3 节为准。
 
-## 构建与运行（骨架阶段）
-
-九模块骨架已可构建：
+## 构建与运行（工程地基阶段）
 
 ```bash
-# 构建
-mvn clean package
+# 构建 + 全部质量门禁（推荐）
+./mvnw clean verify
+
+# 只编译
+./mvnw -DskipTests compile
 
 # 运行 boot fat JAR
 java -jar lytgos-boot/target/lytgos-boot-1.0.0-SNAPSHOT.jar
 
-# 验证骨架端点
+# 验证端点与 OpenAPI
 curl http://localhost:8080/api/v1/health
+curl http://localhost:8080/api/v1/info
+curl http://localhost:8080/v3/api-docs
 
-# CLI 子命令（尚未实现）
-lytgos init
-lytgos status
-lytgos chat [--profile <name>]
-lytgos serve
-lytgos gateway
-lytgos profile list|create|show|delete
-lytgos provider list
-lytgos tool list
-lytgos session list
+# P3C 报告模式（非阻断）
+./mvnw -Pp3c verify
+
+# 安全扫描（需要 NVD_API_KEY）
+NVD_API_KEY=... ./mvnw -Psecurity verify
 ```
 
-`lytgos` 子命令和 Agent 功能尚未实现；当前 boot JAR 只提供 `health` / `info`。`lytgos-boot` 的 `LytgosApplication` 是 Spring Boot 可执行入口；`lytgos-cli` 的 `LytgosCli` 是 Picocli 命令行骨架，尚未打成可执行 jar。骨架阶段有意不引入 Spring AI Alibaba、JPA/SQLite、MCP SDK，实现 US-1 / US-4 / US-5 时再补依赖。
+Windows 用 `mvnw.cmd`。`mvn package` 不触发全部门禁，以 `./mvnw verify` 为准。
+
+`lytgos` 子命令和 Agent 功能尚未实现；当前 boot JAR 只提供 `health` / `info` 和 OpenAPI。`lytgos-boot` 的 `LytgosApplication` 是 Spring Boot 可执行入口；`lytgos-cli` 的 `LytgosCli` 是 Picocli 骨架，尚未打成可执行 jar。JPA/SQLite/MCP 依赖在 US-1 / US-4 补入。
 
 构建前确认 `mvn -v` 使用 JDK 21；如果仍显示 JDK 17，重启终端或先把 `JAVA_HOME` 指向 JDK 21。
 
-当前**没有测试命令或测试框架**。不要声称测试通过，也不要虚构测试命令。后续实现每个模块时，至少需要一个端到端测试，对应 `docs/DemandAnalysis.md` 的功能验收清单。
+工程基线文档在 `docs/engineering/`；质量审计用 `lytgos-quality` skill。测试已存在（context smoke、HTTP 契约、模块架构、ToolRegistry），但不要声称未实际运行的测试通过；后续每个功能模块至少补一个端到端测试，对应 `docs/DemandAnalysis.md` 的功能验收清单。
 
 ## 实施顺序
 
@@ -135,6 +140,7 @@ US-1 (Provider) → US-2 (ReAct) → US-3 (Memory) ∥ US-4 (Tool) → US-5 (Web
 ## 工作约定
 
 - 文档正文用中文；代码标识符、命令、模块名、文件路径用英文。
+- Git 提交信息用中文；保留 `feat:`、`fix:`、`chore:` 等英文类型前缀和 `Co-Authored-By` 尾注。
 - 编辑四份设计文档时，保持现有格式：H2/H3 编号、代码块语言标记（`bash`、`yaml`、`text`）、`| --- | --- |` 表格分隔行。
 - 不做未经检查的批量重命名；要同时检查代码块、路径和命令示例。
 - 架构决策变化时，在同一次变更中更新 `docs/ReleaseBaseline.md` 和相关设计文档。

@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+# Fast local gate: formatting + staged secret scan.
+# Full tests, PMD, SpotBugs and Dependency-Check run in CI (`mvnw verify`).
+
+./mvnw -q -DskipTests spotless:check
+
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --redact
+else
+  echo "gitleaks not installed; skipping staged secret scan" >&2
+fi

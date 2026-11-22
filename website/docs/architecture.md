@@ -1,6 +1,6 @@
 # Architecture
 
-LytgOS2 is a Java 21 + Spring Boot 3.x single-binary Agent OS. The runtime kernel — LLM providers, the ReAct loop, memory, tools, the REST service, and the CLI — ships as one fat JAR. State lives in SQLite and in a workspace on the local filesystem (`.lytgos/` by default).
+LytgOS2 is a Java 21 + Spring Boot 3.5.x single-binary Agent OS. The runtime kernel — LLM providers, the ReAct loop, memory, tools, the REST service, and the CLI — ships as one fat JAR. State lives in SQLite and in a workspace on the local filesystem (`.lytgos/` by default).
 
 LytgOS2 1.0 is a **single-node runtime kernel**. The design leaves room for a distributed foundation and cross-node Agent collaboration, but those are roadmap phases, not 1.0 features.
 

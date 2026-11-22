@@ -1,6 +1,6 @@
 # Provider
 
-LytgOS2 通过 Spring AI Alibaba `ChatModel` 之上的一层薄封装 `ProviderService` 对接 LLM。该服务对 ReAct 循环屏蔽厂商差异，并记录每一次调用。
+LytgOS2 通过 Spring AI Alibaba `ChatModel` 之上的一层薄封装 `ProviderService` 对接 LLM。该服务对 ReAct 循环屏蔽厂商差异，并记录每一次调用。1.0 基线保持 Spring AI Alibaba 1.1.2.x + Spring AI 1.1.2。
 
 ## 显式 name → ChatModel 映射
 

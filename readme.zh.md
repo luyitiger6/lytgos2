@@ -10,7 +10,7 @@
     <img alt="Status: Design" src="https://img.shields.io/badge/status-design-blue">
     <img alt="Target: 1.0" src="https://img.shields.io/badge/target-1.0-brightgreen">
     <img alt="Java 21" src="https://img.shields.io/badge/Java-21-orange">
-    <img alt="Spring Boot 3.x" src="https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F">
+    <img alt="Spring Boot 3.5" src="https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F">
     <img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue">
   </p>
 
@@ -65,7 +65,7 @@ LytgOS2 是一个用 Java 实现的企业级 **Agent OS**。它不是一个 Agen
 
 ## 项目状态
 
-LytgOS2 目前处于**骨架阶段**。1.0 的范围、命名和验收口径已在 [`docs/ReleaseBaseline.md`](docs/ReleaseBaseline.md) 锁定。
+LytgOS2 目前处于**工程地基阶段**：九模块骨架和质量门禁已就位，下一步进入业务能力实现。1.0 的范围、命名和验收口径已在 [`docs/ReleaseBaseline.md`](docs/ReleaseBaseline.md) 锁定。
 
 | 项目 | 状态 |
 |---|---|
@@ -73,9 +73,10 @@ LytgOS2 目前处于**骨架阶段**。1.0 的范围、命名和验收口径已�
 | 1.0 范围基线 | ✅ 完成 |
 | Maven 工程与 Java 代码 | ✅ 九模块骨架完成，业务功能未实现 |
 | 可执行版本 / CLI | 🚧 boot jar 可启动（health/info）；Agent 功能与 CLI 子命令未实现 |
-| 测试、CI、发布流程 | 🚧 未开始 |
+| 测试、CI、质量门禁 | ✅ 工程地基已就位 |
+| Agent 业务功能 | 🚧 未开始 |
 
-> 当前仓库已初始化 Maven 九模块骨架。`mvn clean package` 可构建，`lytgos-boot` 可启动并暴露 `/api/v1/health` 和 `/api/v1/info`。Agent 业务功能、CLI 子命令和测试尚未实现。
+> 当前仓库已初始化 Maven 九模块骨架和工程地基：Maven Wrapper、Spring Boot 3.5.16、Spring AI 1.1.2 + Spring AI Alibaba 1.1.2.4-security-fix、统一 API 信封、OpenAPI、结构化日志、虚拟线程，以及 Spotless/Checkstyle/PMD/SpotBugs/ArchUnit/JaCoCo 门禁。`./mvnw clean verify` 通过；`lytgos-boot` 暴露 `/api/v1/health`、`/api/v1/info` 和 `/v3/api-docs`。Agent 业务功能与 CLI 子命令尚未实现。
 
 ### 1.0 交付范围
 
@@ -161,9 +162,11 @@ LytgOS2 锚定的不是「Agent OS」这个可能过时的词，而是严监管�
 ```bash
 git clone <repository-url>
 cd lytgos2
-mvn clean package
+./mvnw clean verify
 java -jar lytgos-boot/target/lytgos-boot-1.0.0-SNAPSHOT.jar
 ```
+
+Windows 使用 `mvnw.cmd` 替代 `./mvnw`。`mvn verify` 会跑完整质量门禁；`mvn package` 不会。
 
 启动后验证：
 
@@ -171,7 +174,7 @@ java -jar lytgos-boot/target/lytgos-boot-1.0.0-SNAPSHOT.jar
 curl http://localhost:8080/api/v1/health
 ```
 
-> 当前骨架只提供 `health` / `info` 两个系统端点，Agent 功能尚未实现。仓库地址和 Git 仓库将在 1.0 发布前提供。
+> 当前骨架提供 `health` / `info` 两个系统端点和 `/v3/api-docs` OpenAPI 文档，Agent 功能尚未实现。仓库地址和 Git 仓库将在 1.0 发布前提供。
 >
 > Maven 必须运行在 JDK 21 上。如果 `mvn -v` 不是 JDK 21，请先将 `JAVA_HOME` 指向 JDK 21。
 
@@ -317,7 +320,7 @@ LytgOS2 的工作区默认是 `.lytgos/`：
 
 | 模块 | 职责 |
 |---|---|
-| `lytgos-core` | 核心契约与引擎：`OryxTool`、`Session`、`Profile`、`AgentLoader`、`ContextLoader`、`ReActLoop`、`PromptBuilder`、`ToolExecutor`、`AgentService`、`AgentScheduler` |
+| `lytgos-core` | 核心契约与引擎：`LytgTool`、`Session`、`Profile`、`AgentLoader`、`ContextLoader`、`ReActLoop`、`PromptBuilder`、`ToolExecutor`、`AgentService`、`AgentScheduler` |
 | `lytgos-provider` | `ProviderService`、Function Calling 适配、provider name → `ChatModel` 显式映射 |
 | `lytgos-memory` | `MemoryService` 门面、`LongTermMemoryStore`、`MarkdownMemoryStore`、`MemoryTools` |
 | `lytgos-tool` | 内置 Tool、MCP Client、`ToolRegistry`、`Sandbox` + `WhitelistSandbox`、`NotifyChannelAdapter` + `WebhookNotifyAdapter` |
@@ -327,7 +330,7 @@ LytgOS2 的工作区默认是 `.lytgos/`：
 | `lytgos-cli` | Picocli 主入口、12 个子命令、`ConfigLoader` |
 | `lytgos-boot` | Spring Boot 主类、自动配置、依赖聚合、fat JAR 打包 |
 
-技术栈：**JDK 21 + Spring Boot 3.x + Spring AI Alibaba + 自实现 ReAct loop + SQLite + Picocli + MCP Java SDK**。
+技术栈：**JDK 21 + Spring Boot 3.5.x + Spring AI 1.1.x + Spring AI Alibaba 1.1.2.x + 自实现 ReAct loop + SQLite + Picocli + MCP Java SDK**。
 
 ---
 

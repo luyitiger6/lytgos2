@@ -1,0 +1,47 @@
+# 质量规范
+
+## 1. 两层规范，Google 优先
+
+- **格式层：Google Java Format**，由 Spotless 执行，是格式的唯一权威。
+- **编码规约层：Alibaba P3C**，作为补充检查，覆盖命名、并发、异常、集合等“怎么写才对”。
+- 两者规则冲突时，以 Google 为准。P3C 的同类规则通过 suppression 或 profile 裁剪，不反向修改 Google 格式。
+
+## 2. 硬门禁
+
+以下检查失败即阻断合并：
+
+| 检查 | 工具 | 说明 |
+|---|---|---|
+| 格式 | Spotless + gJF 2.0（GOOGLE） | `spotless:check` |
+| 命名/import/行宽 | Checkstyle 10.21.4 | 只做格式之外的规则 |
+| 缺陷/复杂度/性能 | PMD 7.17.0 | `category/java/*` |
+| 字节码缺陷 | SpotBugs 4.10.4.0 | `effort=Max`, `threshold=Medium` |
+| 安全缺陷 | FindSecBugs 1.14.0 | 挂在 SpotBugs 上 |
+| 模块依赖 | ArchUnit 1.5.1 | 无环、方向、禁止标准流 |
+| 测试 | JUnit 5 / AssertJ | 每个模块至少一个可运行测试 |
+| 覆盖率 | JaCoCo | 1.0 先报告，不阻断；逐模块提高后再设阈值 |
+
+## 3. P3C 的定位
+
+P3C 2.1.1 基于 PMD 6.15，不能和 PMD 7 在同一次 Maven 调用中共存。因此：
+
+- P3C 是 **IDE 实时提示 + `-Pp3c` 报告**，不是主门禁。
+- `./mvnw -Pp3c verify` 使用 PMD 6.55 + P3C，`failOnViolation=false`。
+- 不要把 `-Pp3c` 和默认 `verify` 放在同一次 `mvn` 调用里。
+- 如果以后治理要求 P3C 阻断，必须另起 CI job，先建立 baseline，再逐条清理；不要直接打开 `failOnViolation=true`。
+
+## 4. 规则冲突处理
+
+1. 格式冲突：以 Spotless/gJF 为准，删除或抑制 P3C/Checkstyle 的重复格式规则。
+2. 命名冲突：以 Checkstyle + P3C 的命名规则为准；两者重复时保留 Checkstyle。
+3. 误报：优先加窄范围 suppression，附注释说明原因；不要全局关闭规则。
+4. 新规则：先在 `-Pp3c` 或报告模式观察一个迭代，再决定是否升级为硬门禁。
+
+## 5. 本地命令
+
+```bash
+./mvnw spotless:apply      # 自动修格式
+./mvnw spotless:check      # 只检查
+./mvnw verify              # 全量硬门禁
+./mvnw -Pp3c verify        # P3C 报告（非阻断）
+```

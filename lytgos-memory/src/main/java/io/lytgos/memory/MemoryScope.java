@@ -1,9 +1,7 @@
 package io.lytgos.memory;
 
-/**
- * Long-term memory partitions.
- */
+/** Long-term memory partitions. */
 public enum MemoryScope {
-    CORE,
-    ARCHIVAL
+  CORE,
+  ARCHIVAL
 }

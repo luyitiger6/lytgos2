@@ -1,6 +1,6 @@
 # Provider
 
-LytgOS2 talks to LLMs through a thin `ProviderService` on top of Spring AI Alibaba's `ChatModel`. The service hides vendor differences from the ReAct loop and records every call.
+LytgOS2 talks to LLMs through a thin `ProviderService` on top of Spring AI Alibaba's `ChatModel`. The service hides vendor differences from the ReAct loop and records every call. The 1.0 baseline keeps Spring AI Alibaba 1.1.2.x with Spring AI 1.1.2.
 
 ## Explicit name → ChatModel mapping
 

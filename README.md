@@ -10,7 +10,7 @@
     <img alt="Status: Design" src="https://img.shields.io/badge/status-design-blue">
     <img alt="Target: 1.0" src="https://img.shields.io/badge/target-1.0-brightgreen">
     <img alt="Java 21" src="https://img.shields.io/badge/Java-21-orange">
-    <img alt="Spring Boot 3.x" src="https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F">
+    <img alt="Spring Boot 3.5" src="https://img.shields.io/badge/Spring%20Boot-3.5-6DB33F">
     <img alt="License: Apache 2.0" src="https://img.shields.io/badge/license-Apache%202.0-blue">
   </p>
 
@@ -65,7 +65,7 @@ It answers the question: "When an enterprise runs N agents at the same time, wha
 
 ## Project Status
 
-LytgOS2 is currently in the **skeleton phase**. The scope, naming, and acceptance criteria for 1.0 are locked in [`docs/ReleaseBaseline.md`](docs/ReleaseBaseline.md).
+LytgOS2 is currently in the **engineering foundation phase**. The nine-module skeleton and quality gates are in place; business features are next. The scope, naming, and acceptance criteria for 1.0 are locked in [`docs/ReleaseBaseline.md`](docs/ReleaseBaseline.md).
 
 | Item | Status |
 |---|---|
@@ -73,9 +73,10 @@ LytgOS2 is currently in the **skeleton phase**. The scope, naming, and acceptanc
 | 1.0 scope baseline | ✅ Done |
 | Maven project and Java code | ✅ Nine-module skeleton complete; business features not implemented |
 | Runnable version / CLI | 🚧 Boot jar starts (health/info); agent features and CLI subcommands not implemented |
-| Tests, CI, release process | 🚧 Not started |
+| Tests, CI, quality gates | ✅ Engineering foundation installed |
+| Agent business features | 🚧 Not started |
 
-> The repository currently contains an initialized nine-module Maven skeleton. `mvn clean package` builds, and `lytgos-boot` starts and exposes `/api/v1/health` and `/api/v1/info`. Agent business features, CLI subcommands, and tests are not implemented yet.
+> The repository contains an initialized nine-module Maven skeleton plus the engineering foundation: Maven Wrapper, Spring Boot 3.5.16, Spring AI 1.1.2 + Spring AI Alibaba 1.1.2.4-security-fix, unified API envelope, OpenAPI, structured logging, virtual threads, and Spotless/Checkstyle/PMD/SpotBugs/ArchUnit/JaCoCo gates. `./mvnw clean verify` passes; `lytgos-boot` exposes `/api/v1/health`, `/api/v1/info`, and `/v3/api-docs`. Agent business features and CLI subcommands are not implemented yet.
 
 ### 1.0 Delivery Scope
 
@@ -161,9 +162,11 @@ Three trigger sources—CLI pushed by a person, HTTP calls, and clock-driven sch
 ```bash
 git clone <repository-url>
 cd lytgos2
-mvn clean package
+./mvnw clean verify
 java -jar lytgos-boot/target/lytgos-boot-1.0.0-SNAPSHOT.jar
 ```
+
+Windows uses `mvnw.cmd` instead of `./mvnw`. `mvn verify` runs the full quality gate; `mvn package` does not.
 
 Verify after startup:
 
@@ -171,7 +174,7 @@ Verify after startup:
 curl http://localhost:8080/api/v1/health
 ```
 
-> The current skeleton exposes only the `health` / `info` system endpoints; agent features are not implemented yet. The repository URL and Git repository will be provided before the 1.0 release.
+> The current skeleton exposes the `health` / `info` system endpoints and OpenAPI at `/v3/api-docs`; agent features are not implemented yet. The repository URL and Git repository will be provided before the 1.0 release.
 >
 > Maven must run on JDK 21. If `mvn -v` does not show JDK 21, point `JAVA_HOME` to JDK 21 first.
 
@@ -317,7 +320,7 @@ The current executable entry point is `LytgosApplication` in `lytgos-boot` (a Sp
 
 | Module | Responsibility |
 |---|---|
-| `lytgos-core` | Core contracts and engine: `OryxTool`, `Session`, `Profile`, `AgentLoader`, `ContextLoader`, `ReActLoop`, `PromptBuilder`, `ToolExecutor`, `AgentService`, `AgentScheduler` |
+| `lytgos-core` | Core contracts and engine: `LytgTool`, `Session`, `Profile`, `AgentLoader`, `ContextLoader`, `ReActLoop`, `PromptBuilder`, `ToolExecutor`, `AgentService`, `AgentScheduler` |
 | `lytgos-provider` | `ProviderService`, function-calling adaptation, explicit provider name → `ChatModel` mapping |
 | `lytgos-memory` | `MemoryService` facade, `LongTermMemoryStore`, `MarkdownMemoryStore`, `MemoryTools` |
 | `lytgos-tool` | Built-in tools, MCP client, `ToolRegistry`, `Sandbox` + `WhitelistSandbox`, `NotifyChannelAdapter` + `WebhookNotifyAdapter` |
@@ -327,7 +330,7 @@ The current executable entry point is `LytgosApplication` in `lytgos-boot` (a Sp
 | `lytgos-cli` | Picocli main entry, 12 subcommands, `ConfigLoader` |
 | `lytgos-boot` | Spring Boot main class, auto-configuration, dependency aggregation, fat JAR packaging |
 
-Tech stack: **JDK 21 + Spring Boot 3.x + Spring AI Alibaba + self-implemented ReAct loop + SQLite + Picocli + MCP Java SDK**.
+Tech stack: **JDK 21 + Spring Boot 3.5.x + Spring AI 1.1.x + Spring AI Alibaba 1.1.2.x + self-implemented ReAct loop + SQLite + Picocli + MCP Java SDK**.
 
 ---
 

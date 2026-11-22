@@ -1,6 +1,6 @@
 # 架构
 
-LytgOS2 是一个基于 Java 21 + Spring Boot 3.x 的单二进制 Agent OS。运行时内核——LLM Provider、ReAct 循环、记忆、Tool、REST 服务与 CLI——打包成一个 fat JAR。状态保存在 SQLite 和工作区文件系统中（默认 `.lytgos/`）。
+LytgOS2 是一个基于 Java 21 + Spring Boot 3.5.x 的单二进制 Agent OS。运行时内核——LLM Provider、ReAct 循环、记忆、Tool、REST 服务与 CLI——打包成一个 fat JAR。状态保存在 SQLite 和工作区文件系统中（默认 `.lytgos/`）。
 
 LytgOS2 1.0 是**单机运行时内核**。架构为后续的分布式底座和跨节点 Agent 协作留出空间，但这些属于路线图阶段，不是 1.0 功能。
 
