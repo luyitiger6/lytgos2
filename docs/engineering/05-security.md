@@ -35,7 +35,7 @@ CodeQL / Semgrep 作为可选增强：公开仓库优先 CodeQL，私有仓库�
 - 外部依赖禁止 SNAPSHOT；内部模块使用 `${project.version}`。
 - 新增依赖前检查：维护活跃度、许可证、已知 CVE、是否与 Jackson 2 / Boot 3.5 兼容。
 - Dependency-Check 需要 `NVD_API_KEY`；无 key 时只跑 SBOM，不阻塞主构建。
-- 发版产物附带 `target/bom.json`。
+- 发版产物附带 `target/classes/META-INF/sbom/application.cdx.json`。
 
 ## 5. 安全扫描的边界
 

@@ -97,5 +97,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: sbom
-          path: target/bom.json
-          if-no-files-found: ignore
+          path: target/classes/META-INF/sbom/*.cdx.json
+          if-no-files-found: error
