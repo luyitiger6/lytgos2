@@ -9,7 +9,7 @@ CLI 是 `lytgos <command>` 入口（Picocli）。1.0 共有 12 个命令。
 | 启动与状态 | `lytgos init` | 创建 `.lytgos/` 工作区与默认 Bootstrap 文件 |
 | 启动与状态 | `lytgos status` | 查看工作区与数据文件状态 |
 | 启动与状态 | `lytgos chat --profile <name>` | 与 Agent 交互对话 |
-| 启动与状态 | `lytgos serve` | 启动 REST API 服务（默认 8080） |
+| 启动与状态 | `lytgos serve` | 启动 REST API 服务（默认 8989） |
 | 启动与状态 | `lytgos gateway` | 守护进程模式常驻运行 |
 | Profile | `lytgos profile list` | 列出 Agent 目录 / Profile |
 | Profile | `lytgos profile create <name>` | 创建 Agent 目录与 `AGENT.md` |

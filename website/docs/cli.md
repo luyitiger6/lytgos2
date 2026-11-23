@@ -9,7 +9,7 @@ The CLI is the `lytgos <command>` entry point (Picocli). 1.0 has 12 commands.
 | Start & status | `lytgos init` | Create the `.lytgos/` workspace and default bootstrap files |
 | Start & status | `lytgos status` | Print workspace and data-file status |
 | Start & status | `lytgos chat --profile <name>` | Interactive chat with an Agent |
-| Start & status | `lytgos serve` | Start the REST API server (default port 8080) |
+| Start & status | `lytgos serve` | Start the REST API server (default port 8989) |
 | Start & status | `lytgos gateway` | Run as a resident daemon |
 | Profile | `lytgos profile list` | List Agent directories / Profiles |
 | Profile | `lytgos profile create <name>` | Create an Agent directory and `AGENT.md` |

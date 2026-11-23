@@ -27,6 +27,14 @@ public final class PromptBuilder {
   /** 日期时间格式，使用带偏移的 ISO-8601 形式。 */
   private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
+  /** 多语言对话策略；不把模型限制在中文或英文。 */
+  private static final String LANGUAGE_POLICY =
+      "Language policy: always answer in the primary language of the user's most recent message. "
+          + "If the user asks to switch languages, switch immediately. "
+          + "For mixed-language input, use the dominant language. "
+          + "Keep code, commands, file paths, URLs, and identifiers unchanged. "
+          + "Do not default to Chinese or English when another language is clearly used.";
+
   /** 工具名称到工具实现的只读映射。 */
   private final Map<String, LytgTool> tools;
 
@@ -83,6 +91,8 @@ public final class PromptBuilder {
     String identityPrompt =
         agentProfile.identity() == null ? null : agentProfile.identity().prompt();
     appendSection(builder, identityPrompt);
+    // 语言策略放在身份之后，确保模型按用户当前语言回复。
+    appendSection(builder, LANGUAGE_POLICY);
     // context 是 Bootstrap 与 Skill 元数据。
     String context = contextLoader.buildContext(agentProfile);
     appendSection(builder, context);

@@ -449,7 +449,7 @@ Session 是用户和 Agent 一次对话的上下文容器，包含起止时间�
 | 模式 | 命令 | 说明 |
 | --- | --- | --- |
 | 交互对话 | `lytgos chat` | 交互式多轮对话，开发调试和日常使用的主要方式。`--message "xxx"` 可发单条消息后退出 |
-| HTTP API | `lytgos serve` | 启动后在指定端口（默认 8080）开放 RESTful 接口，业务系统通过 HTTP 调用 |
+| HTTP API | `lytgos serve` | 启动后在指定端口（默认 8989）开放 RESTful 接口，业务系统通过 HTTP 调用 |
 | 守护进程 | `lytgos gateway` | 常驻守护进程，同时服务多个 Channel |
 
 三种模式共享同一份 Profile 配置和 Session 存储。

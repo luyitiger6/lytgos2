@@ -106,7 +106,7 @@ send a short dressing suggestion to the `team-lark` notify channel.
 如果 Agent 使用 `notify`，需要先注册通知渠道（webhook）：
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/notify-channels \
+curl -X POST http://localhost:8989/api/v1/notify-channels \
   -H 'Content-Type: application/json' \
   -d '{"name":"team-lark","type":"webhook","url":"https://open.larksuite.com/open-apis/bot/v2/hook/xxxx","description":"团队飞书 webhook"}'
 ```
@@ -125,10 +125,10 @@ lytgos chat --profile weather-daily
 lytgos serve
 ```
 
-服务默认监听 `8080`：
+服务默认监听 `8989`：
 
 ```bash
-curl http://localhost:8080/api/v1/health
+curl http://localhost:8989/api/v1/health
 ```
 
 守护进程模式使用 `lytgos gateway`。

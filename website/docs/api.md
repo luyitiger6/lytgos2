@@ -1,6 +1,6 @@
 # REST API
 
-`lytgos serve` starts a Spring MVC server with virtual threads. The default port is `8080`; every endpoint is under `/api/v1` (plus the scheduler v2 support endpoints under `/api/v2`).
+`lytgos serve` starts a Spring MVC server with virtual threads. The default port is `8989`; every endpoint is under `/api/v1` (plus the scheduler v2 support endpoints under `/api/v2`).
 
 ## Response envelope
 
@@ -47,22 +47,22 @@ Request bodies follow the OpenAPI schema exposed at `/swagger-ui`. Typical calls
 
 ```bash
 # create a session
-curl -X POST http://localhost:8080/api/v1/sessions \
+curl -X POST http://localhost:8989/api/v1/sessions \
   -H 'Content-Type: application/json' \
   -d '{"profile": "weather-daily"}'
 
 # send a message to the session
-curl -X POST http://localhost:8080/api/v1/sessions/<id>/messages \
+curl -X POST http://localhost:8989/api/v1/sessions/<id>/messages \
   -H 'Content-Type: application/json' \
   -d '{"content": "What is the weather in Beijing today?"}'
 
 # stateless Agent invocation
-curl -X POST http://localhost:8080/api/v1/agents/weather-daily/invoke \
+curl -X POST http://localhost:8989/api/v1/agents/weather-daily/invoke \
   -H 'Content-Type: application/json' \
   -d '{"message": "Check today’s weather."}'
 
 # health
-curl http://localhost:8080/api/v1/health
+curl http://localhost:8989/api/v1/health
 ```
 
 ## Support endpoints (1.0)

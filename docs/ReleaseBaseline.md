@@ -299,7 +299,7 @@ lytgos session list
 
 ### 5.7 Web Service 与 CLI
 
-- `lytgos serve` 启动 Spring MVC + virtual thread，默认端口 8080。
+- `lytgos serve` 启动 Spring MVC + virtual thread，默认端口 8989。
 - 6 个 Controller：Session、Agent、Profile、Memory、Tool、System。
 - 统一响应信封 `ApiResponse`：`code`、`message`、`data`、`timestamp`；成功和错误共用。
 - OpenAPI 通过 springdoc 暴露在 `/swagger-ui`。

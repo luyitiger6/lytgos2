@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 class PromptBuilderTest {
 
   @Test
-  @DisplayName("system prompt 按身份、Bootstrap、当前时间顺序拼接")
+  @DisplayName("system prompt 按身份、语言策略、Bootstrap、当前时间顺序拼接")
   void systemPromptUsesExpectedOrderAndDate() {
     // contextLoader 返回固定的 Bootstrap 文本。
     ContextLoader contextLoader = mock(ContextLoader.class);
@@ -53,9 +53,11 @@ class PromptBuilderTest {
     // system 是最终 system prompt。
     String system = prompt.systemPrompt();
     assertThat(system).startsWith("你是测试助手");
+    assertThat(system).contains("Language policy:");
     assertThat(system).contains("## Bootstrap: SOUL.md");
     assertThat(system).endsWith("当前时间: 2026-11-23T04:00:00Z");
-    assertThat(system.indexOf("你是测试助手")).isLessThan(system.indexOf("## Bootstrap"));
+    assertThat(system.indexOf("你是测试助手")).isLessThan(system.indexOf("Language policy:"));
+    assertThat(system.indexOf("Language policy:")).isLessThan(system.indexOf("## Bootstrap"));
     assertThat(system.indexOf("## Bootstrap")).isLessThan(system.indexOf("当前时间"));
     assertThat(prompt.tools()).containsExactly(echo);
   }

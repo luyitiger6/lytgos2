@@ -6,7 +6,7 @@ LytgOS2 1.0 has **no authentication, authorization, RBAC, SSO, API keys, or CORS
 
 - Every REST endpoint is unauthenticated.
 - CORS is open.
-- Anyone who can reach port `8080` can invoke Agents and read Sessions.
+- Anyone who can reach port `8989` can invoke Agents and read Sessions.
 - Do not expose the service directly to the public internet.
 
 ## Recommended deployment

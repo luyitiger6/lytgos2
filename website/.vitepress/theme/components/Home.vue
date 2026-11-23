@@ -70,7 +70,7 @@ Audit: tool_invocations written on every call`,
       '所有能力通过 REST API 对外暴露，业务系统用 HTTP 接入，任何开发语言都可集成；Web Service 与 CLI、Scheduler 共享同一套 Session 与 Profile。',
       'Every capability is exposed through REST APIs; business systems integrate over HTTP in any language. The Web Service shares Session and Profile storage with CLI and Scheduler.'
     ),
-    code: `❯ lytgos serve --port 8080
+    code: `❯ lytgos serve
 
 /api/v1/**     REST API
 /swagger-ui    OpenAPI docs`,

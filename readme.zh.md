@@ -171,7 +171,7 @@ Windows 使用 `mvnw.cmd` 替代 `./mvnw`。`mvn verify` 会跑完整质量门�
 启动后验证：
 
 ```bash
-curl http://localhost:8080/api/v1/health
+curl http://localhost:8989/api/v1/health
 ```
 
 > 当前骨架提供 `health` / `info` 两个系统端点和 `/v3/api-docs` OpenAPI 文档，Agent 功能尚未实现。仓库地址和 Git 仓库将在 1.0 发布前提供。
@@ -355,6 +355,7 @@ LytgOS2 的工作区默认是 `.lytgos/`：
 | [`docs/DemandAnalysis.md`](docs/DemandAnalysis.md) | 需求文档：核心/扩展/社区三档需求与验收标准 |
 | [`docs/IndustryResearch.md`](docs/IndustryResearch.md) | 行业调研：Agent OS 格局、Java 生态缺位、LytgOS2 定位 |
 | [`docs/AiProgrammingGuide.md`](docs/AiProgrammingGuide.md) | AI 编程指南：Spec-Kit 流程与 US-1…US-5 实施顺序 |
+| [`CLI-User-Guide.md`](CLI-User-Guide.md) | CLI 用户手册：安装、命令、会话、AgentProfile 与故障排查 |
 | [`CLAUDE.md`](CLAUDE.md) | Claude Code 在本仓库工作的约定与架构速览 |
 
 ---

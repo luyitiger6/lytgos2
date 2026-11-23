@@ -1,8 +1,8 @@
 package io.lytgos.core.agent;
 
 import io.lytgos.core.session.Session;
+import io.lytgos.core.session.SessionManager;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * 三种触发源共用的 Agent 处理入口。
@@ -19,22 +19,22 @@ public final class AgentService {
   /** ReAct 循环。 */
   private final ReActLoop reActLoop;
 
-  /** 会话保存钩子；第 18 节替换为 SessionManager。 */
-  private final Consumer<Session> sessionSaver;
+  /** 会话统一门面；处理完成后由它持久化会话。 */
+  private final SessionManager sessionManager;
 
   /**
    * 创建 AgentService。
    *
    * @param registry AgentProfile 内存索引
    * @param reActLoop ReAct 循环
-   * @param sessionSaver 会话保存钩子
+   * @param sessionManager 会话统一门面
    */
   public AgentService(
-      AgentProfileRegistry registry, ReActLoop reActLoop, Consumer<Session> sessionSaver) {
+      AgentProfileRegistry registry, ReActLoop reActLoop, SessionManager sessionManager) {
     // 三个协作者都不能为空。
     this.registry = Objects.requireNonNull(registry, "registry");
     this.reActLoop = Objects.requireNonNull(reActLoop, "reActLoop");
-    this.sessionSaver = Objects.requireNonNull(sessionSaver, "sessionSaver");
+    this.sessionManager = Objects.requireNonNull(sessionManager, "sessionManager");
   }
 
   /**
@@ -57,8 +57,8 @@ public final class AgentService {
     try {
       // reply 是 ReAct 循环的最终答复。
       String reply = reActLoop.run(session, userMessage, agentProfile);
-      // 保存钩子失败时异常向上抛，不静默丢会话。
-      sessionSaver.accept(session);
+      // 保存失败时异常向上抛，不静默丢会话。
+      sessionManager.save(session);
       return reply;
     } finally {
       // 无论成功或异常都必须清理请求级上下文。
