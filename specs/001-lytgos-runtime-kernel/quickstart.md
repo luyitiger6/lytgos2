@@ -182,7 +182,7 @@ settings:
 创建通知渠道（需要 `lytgos serve` 已启动，见第 7 节）：
 
 ```bash
-curl -s -X POST http://localhost:8080/api/v1/notify-channels \
+curl -s -X POST http://localhost:8989/api/v1/notify-channels \
   -H 'Content-Type: application/json' \
   -d '{"name":"team-webhook","type":"generic","url":"https://your-webhook.example.com/hook","description":"demo"}'
 ```
@@ -239,29 +239,29 @@ bin/lytgos serve
 另开终端：
 
 ```bash
-curl -s http://localhost:8080/api/v1/health
-curl -s http://localhost:8080/api/v1/info
-curl -s http://localhost:8080/v3/api-docs > /tmp/lytgos-openapi.json
+curl -s http://localhost:8989/api/v1/health
+curl -s http://localhost:8989/api/v1/info
+curl -s http://localhost:8989/v3/api-docs > /tmp/lytgos-openapi.json
 ```
 
 ### 7.1 会话全链路
 
 ```bash
-SESSION_ID=$(curl -s -X POST http://localhost:8080/api/v1/sessions \
+SESSION_ID=$(curl -s -X POST http://localhost:8989/api/v1/sessions \
   -H 'Content-Type: application/json' \
   -d '{"profile":"hello","user":"alice"}' | jq -r '.data.sessionId')
 
-curl -s -X POST "http://localhost:8080/api/v1/sessions/$SESSION_ID/messages" \
+curl -s -X POST "http://localhost:8989/api/v1/sessions/$SESSION_ID/messages" \
   -H 'Content-Type: application/json' \
   -d '{"message":"用一句话解释 ReAct。"}'
 
-curl -s "http://localhost:8080/api/v1/sessions/$SESSION_ID"
+curl -s "http://localhost:8989/api/v1/sessions/$SESSION_ID"
 
-curl -s -X DELETE "http://localhost:8080/api/v1/sessions/$SESSION_ID"
+curl -s -X DELETE "http://localhost:8989/api/v1/sessions/$SESSION_ID"
 
 # 归档后写入应返回 409
 curl -s -o /tmp/archived.json -w "%{http_code}\n" \
-  -X POST "http://localhost:8080/api/v1/sessions/$SESSION_ID/messages" \
+  -X POST "http://localhost:8989/api/v1/sessions/$SESSION_ID/messages" \
   -H 'Content-Type: application/json' \
   -d '{"message":"还能继续吗？"}'
 cat /tmp/archived.json
@@ -272,7 +272,7 @@ cat /tmp/archived.json
 ### 7.2 无状态 invoke
 
 ```bash
-curl -s -X POST http://localhost:8080/api/v1/agents/hello/invoke \
+curl -s -X POST http://localhost:8989/api/v1/agents/hello/invoke \
   -H 'Content-Type: application/json' \
   -d '{"message":"只回答：1+1 等于几？"}'
 ```
@@ -282,10 +282,10 @@ curl -s -X POST http://localhost:8080/api/v1/agents/hello/invoke \
 ### 7.3 列表与错误
 
 ```bash
-curl -s http://localhost:8080/api/v1/profiles
-curl -s http://localhost:8080/api/v1/tools
-curl -s http://localhost:8080/api/v1/memory
-curl -s -o /tmp/unknown.json -w "%{http_code}\n" http://localhost:8080/api/v1/agents/not-exist/invoke \
+curl -s http://localhost:8989/api/v1/profiles
+curl -s http://localhost:8989/api/v1/tools
+curl -s http://localhost:8989/api/v1/memory
+curl -s -o /tmp/unknown.json -w "%{http_code}\n" http://localhost:8989/api/v1/agents/not-exist/invoke \
   -H 'Content-Type: application/json' -d '{"message":"hi"}'
 cat /tmp/unknown.json
 ```
@@ -309,10 +309,10 @@ schedules:
 重启 `lytgos serve`。
 
 ```bash
-curl -s http://localhost:8080/api/v2/schedules
-curl -s -X POST http://localhost:8080/api/v2/schedules/1/run
-curl -s http://localhost:8080/api/v2/schedules/1/executions
-curl -s -X PUT http://localhost:8080/api/v2/schedules/1 \
+curl -s http://localhost:8989/api/v2/schedules
+curl -s -X POST http://localhost:8989/api/v2/schedules/1/run
+curl -s http://localhost:8989/api/v2/schedules/1/executions
+curl -s -X PUT http://localhost:8989/api/v2/schedules/1 \
   -H 'Content-Type: application/json' -d '{"enabled":false}'
 ```
 
@@ -326,7 +326,7 @@ curl -s -X PUT http://localhost:8080/api/v2/schedules/1 \
 bin/lytgos gateway
 ```
 
-预期：进程常驻、**不监听 8080**；到点触发任务并写 `task_executions`；可用另一个终端执行 `bin/lytgos session list` 或 `sqlite3` 查看调度 Session/执行历史。
+预期：进程常驻、**不监听 8989**；到点触发任务并写 `task_executions`；可用另一个终端执行 `bin/lytgos session list` 或 `sqlite3` 查看调度 Session/执行历史。
 
 ## 9. 两个硬性 Demo
 
@@ -391,5 +391,5 @@ mvn test
 | `Session 已归档` | 新建 Session；1.0 不支持恢复归档 |
 | SQLite `database is locked` | 确认 WAL/busy_timeout；不要同时运行两个写进程（`serve` 与 `gateway` 二选一） |
 | MCP server 启动失败 | 检查 `command`/`args`/`env`，查看 server stderr；`tool list` 中应无其工具 |
-| 端口冲突 | 修改 `server.port` 或停止占用 8080 的进程 |
+| 端口冲突 | 修改 `server.port` 或停止占用 8989 的进程 |
 | `gateway` 没有 HTTP | 预期行为；gateway 不暴露 REST，管理端点由 `serve` 提供 |

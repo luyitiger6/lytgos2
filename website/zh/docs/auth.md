@@ -6,7 +6,7 @@ LytgOS2 1.0 **没有认证、授权、RBAC、SSO、API Key 或 CORS 白名单**�
 
 - 所有 REST 端点都不需要认证。
 - CORS 全开。
-- 任何能访问 `8080` 端口的人都可以调用 Agent、读取 Session。
+- 任何能访问 `8989` 端口的人都可以调用 Agent、读取 Session。
 - 不要把服务直接暴露到公网。
 
 ## 推荐部署方式

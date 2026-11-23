@@ -108,9 +108,9 @@ LytgOS2 是一个 Java 原生、可私有部署、可审计的企业级 Agent OS
 java -jar lytgos-boot/target/lytgos-boot-1.0.0-SNAPSHOT.jar
 
 # 验证端点与 OpenAPI
-curl http://localhost:8080/api/v1/health
-curl http://localhost:8080/api/v1/info
-curl http://localhost:8080/v3/api-docs
+curl http://localhost:8989/api/v1/health
+curl http://localhost:8989/api/v1/info
+curl http://localhost:8989/v3/api-docs
 
 # P3C 阻断门禁
 ./mvnw -Pp3c verify

@@ -106,7 +106,7 @@ send a short dressing suggestion to the `team-lark` notify channel.
 Register a notify channel (webhook) if the Agent uses `notify`:
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/notify-channels \
+curl -X POST http://localhost:8989/api/v1/notify-channels \
   -H 'Content-Type: application/json' \
   -d '{"name":"team-lark","type":"webhook","url":"https://open.larksuite.com/open-apis/bot/v2/hook/xxxx","description":"Team Lark webhook"}'
 ```
@@ -125,10 +125,10 @@ lytgos chat --profile weather-daily
 lytgos serve
 ```
 
-The server listens on port `8080` by default:
+The server listens on port `8989` by default:
 
 ```bash
-curl http://localhost:8080/api/v1/health
+curl http://localhost:8989/api/v1/health
 ```
 
 For daemon mode, use `lytgos gateway`.

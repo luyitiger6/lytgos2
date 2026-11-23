@@ -1,6 +1,6 @@
 # REST API
 
-`lytgos serve` 启动一个使用虚拟线程的 Spring MVC 服务，默认端口 `8080`。所有端点位于 `/api/v1` 下（调度 v2 支撑端点在 `/api/v2` 下）。
+`lytgos serve` 启动一个使用虚拟线程的 Spring MVC 服务，默认端口 `8989`。所有端点位于 `/api/v1` 下（调度 v2 支撑端点在 `/api/v2` 下）。
 
 ## 响应信封
 
@@ -47,22 +47,22 @@
 
 ```bash
 # 创建 Session
-curl -X POST http://localhost:8080/api/v1/sessions \
+curl -X POST http://localhost:8989/api/v1/sessions \
   -H 'Content-Type: application/json' \
   -d '{"profile": "weather-daily"}'
 
 # 给 Session 发消息
-curl -X POST http://localhost:8080/api/v1/sessions/<id>/messages \
+curl -X POST http://localhost:8989/api/v1/sessions/<id>/messages \
   -H 'Content-Type: application/json' \
   -d '{"content": "今天北京天气怎么样？"}'
 
 # 无状态调用 Agent
-curl -X POST http://localhost:8080/api/v1/agents/weather-daily/invoke \
+curl -X POST http://localhost:8989/api/v1/agents/weather-daily/invoke \
   -H 'Content-Type: application/json' \
   -d '{"message": "查一下今天的天气。"}'
 
 # Health
-curl http://localhost:8080/api/v1/health
+curl http://localhost:8989/api/v1/health
 ```
 
 ## 1.0 支撑端点

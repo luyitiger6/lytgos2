@@ -21,8 +21,24 @@
       <artifactId>lytgos-core</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.lytgos</groupId>
+      <artifactId>lytgos-channel-cli</artifactId>
+    </dependency>
+    <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
     </dependency>
   </dependencies>
 </project>

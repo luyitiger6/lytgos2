@@ -1,6 +1,6 @@
 # REST API Contract: LytgOS2 1.0
 
-**Feature**: `001-lytgos-runtime-kernel` | **Base URL**: `http://<host>:8080/api`
+**Feature**: `001-lytgos-runtime-kernel` | **Base URL**: `http://<host>:8989/api`
 
 所有端点由 `lytgos serve` 暴露。1.0 无认证、无 RBAC，默认按可信内网部署；CORS 全开。`Content-Type: application/json`。
 

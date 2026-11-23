@@ -404,7 +404,7 @@ Web Service 是 LytgOS2 的对外完整门面，业务系统通过 REST API 接�
 
 ### 7.1 模块组成
 
-**`WebServer` 模块。** 启动 Spring MVC 服务器，`lytgos serve` 命令触发，默认端口 `8080`，开启 LytgOS2 virtual thread。
+**`WebServer` 模块。** 启动 Spring MVC 服务器，`lytgos serve` 命令触发，默认端口 `8989`，开启 LytgOS2 virtual thread。
 
 **`ApiController` 集合。** 按资源分六个 Controller：`SessionApiController`（会话管理）、`AgentApiController`（无状态调用）、`ProfileApiController`（Profile 查询）、`MemoryApiController`（Memory 查询）、`ToolApiController`（Tool 信息）、`SystemApiController`（系统状态）。每个 Controller 只做参数校验、响应包装、错误处理，实际逻辑委托给核心层的服务。
 

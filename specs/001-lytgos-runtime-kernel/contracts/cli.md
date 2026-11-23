@@ -70,7 +70,7 @@ lytgos chat [--profile <name>] [--new] [--workspace <dir>]
 lytgos serve [--workspace <dir>]
 ```
 
-- 启动 Spring MVC + virtual threads + REST + `AgentScheduler`；默认端口 8080（`server.port`）。
+- 启动 Spring MVC + virtual threads + REST + `AgentScheduler`；默认端口 8989（`server.port`）。
 - 要求工作区已初始化；未初始化时给出“先运行 lytgos init”的错误并退出码 1。
 - 前台阻塞，直到 SIGINT/SIGTERM。
 - 唯一暴露 HTTP 的模式；不得与 `gateway` 在同一工作区以两个独立进程同时运行。

@@ -171,7 +171,7 @@ Windows uses `mvnw.cmd` instead of `./mvnw`. `mvn verify` runs the full quality 
 Verify after startup:
 
 ```bash
-curl http://localhost:8080/api/v1/health
+curl http://localhost:8989/api/v1/health
 ```
 
 > The current skeleton exposes the `health` / `info` system endpoints and OpenAPI at `/v3/api-docs`; agent features are not implemented yet. The repository URL and Git repository will be provided before the 1.0 release.
@@ -355,6 +355,7 @@ Tech stack: **JDK 21 + Spring Boot 3.5.x + Spring AI 1.1.x + Spring AI Alibaba 1
 | [`docs/DemandAnalysis.md`](docs/DemandAnalysis.md) | Requirements: core / extension / community tiers and acceptance criteria |
 | [`docs/IndustryResearch.md`](docs/IndustryResearch.md) | Industry research: the Agent OS landscape, the Java ecosystem gap, LytgOS2's positioning |
 | [`docs/AiProgrammingGuide.md`](docs/AiProgrammingGuide.md) | AI programming guide: Spec-Kit process and the US-1…US-5 implementation order |
+| [`CLI-User-Guide.md`](CLI-User-Guide.md) | CLI user guide: installation, commands, sessions, AgentProfiles, troubleshooting |
 | [`CLAUDE.md`](CLAUDE.md) | Conventions and architecture overview for Claude Code working in this repository |
 
 ---

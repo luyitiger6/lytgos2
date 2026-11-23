@@ -13,4 +13,24 @@
     <Class name="io.lytgos.core.agent.AgentProfile"/>
     <Bug pattern="EI_EXPOSE_REP"/>
   </Match>
+  <!-- LauncherEnvironment 有意持有 PATH 编辑策略，由安装器调用，不是可变数据 DTO。 -->
+  <Match>
+    <Class name="io.lytgos.cli.bootstrap.LauncherEnvironment"/>
+    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+  </Match>
+  <!-- 启动脚本必须可执行；755 是用户级启动器的预期权限。 -->
+  <Match>
+    <Class name="io.lytgos.cli.bootstrap.LauncherInstaller"/>
+    <Bug pattern="OVERLY_PERMISSIVE_FILE_PERMISSION"/>
+  </Match>
+  <!-- 使用固定 reg.exe 和参数列表，不经过 shell；用户 PATH 值仅作为参数传递。 -->
+  <Match>
+    <Class name="io.lytgos.cli.bootstrap.WindowsUserPathEditor"/>
+    <Bug pattern="COMMAND_INJECTION"/>
+  </Match>
+  <!-- ResourceBundle 是只读资源视图，不包含可变业务状态。 -->
+  <Match>
+    <Class name="io.lytgos.cli.i18n.CliMessages"/>
+    <Bug pattern="MS_EXPOSE_REP"/>
+  </Match>
 </FindBugsFilter>
